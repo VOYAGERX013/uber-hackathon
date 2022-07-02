@@ -12,14 +12,12 @@ import os
 
 load_dotenv()
 
-def home(req):
-    return HttpResponse("Hello world!")
-
-class Register(APIView):
+class Register(APIView): # Class for registering a user when the register route is hit in urls.py
 
     def post(self, request):
         response = Response()
 
+        # If the user is saved successfully, send a success message, else sent a failure message
         try:
             serializer = UserSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -36,30 +34,35 @@ class Register(APIView):
         return response
             
 
-class Login(APIView):
+class Login(APIView): # Class for logging a user when the login in route is hit in urls.py
     def post(self, request):
         response = Response()
 
+        # If the login function works fine, show success message, else show failure message
         try:
-            email = request.data["email"]
-            password = request.data["password"]
+            email = request.data["email"] # Get the email from form
+            password = request.data["password"] # Get the password from form
     
-            user = User.objects.filter(email=email).first()
+            user = User.objects.filter(email=email).first() # Get corresponding user record from the database
 
+            # Checking if user exists and correct password is provided in form
             if user is None:
                 raise AuthenticationFailed("incorrect credentials")
         
             if not user.check_password(password):
                 raise AuthenticationFailed("incorrect credentials")
         
+            # Payload for generating jwt token with expiration time of 5 hours
             payload = {
                 "id" : user.id,
                 "exp" : datetime.datetime.utcnow() + datetime.timedelta(hours=5),
                 "iat" : datetime.datetime.utcnow()
             }
 
+            # Encode the payload data using a secret key
             token = jwt.encode(payload, os.environ["SECRET_KEY"], algorithm="HS256")
     
+            # Setting cookie with value of the token
             response.set_cookie(key="token", value=token)
             response.data = {
                 "success" : True,
@@ -74,32 +77,56 @@ class Login(APIView):
         return response
         
 
-class GetUser(APIView):
+class GetUser(APIView): # Class for getting user credentials
     def get(self, request):
+        response = Response()
+        # Get the token from cookies
         token = request.COOKIES.get("token")
 
+        # Check if token exists and is not expired
         if not token:
-            raise AuthenticationFailed("unauthenticated")
+            response.data = {
+                "success" : False
+            }
+
+            return response
 
         try:
+            # Decode the id from the jwt token
             payload = jwt.decode(token, os.environ["SECRET_KEY"], algorithms=["HS256"])
         except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed("unauthenticated")
+            response.data = {
+                "success" : False
+            }
 
+            return response
+
+        # Get the user credentials using the id
         user = User.objects.filter(id=payload['id']).first()
 
+        # Check if user exists
         if not user:
-            raise AuthenticationFailed("unauthenticated")
+            response.data = {
+                "success" : False
+            }
+
+            return response
 
         serializer = UserSerializer(user)
+
+        response.data = {
+            "success" : True,
+            "result" : serializer.data
+        }
         
-        return Response(serializer.data)
+        return response
         
-class Logout(APIView):
+class Logout(APIView): # Class for logging out
     def post(self, request):
         response = Response()
 
         try:
+            # Remove the token to logout the user
             response.delete_cookie("token")
 
             response.data = {
