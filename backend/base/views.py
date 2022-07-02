@@ -18,45 +18,61 @@ def home(req):
 class Register(APIView):
 
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
         response = Response()
-        response.data = {
-            "success" : True
-        }
+
+        try:
+            serializer = UserSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+    
+            response.data = {
+                "success" : True
+            }
+        except:
+            response.data = {
+                "success" : False
+            }
 
         return response
+            
 
 class Login(APIView):
     def post(self, request):
-        email = request.data["email"]
-        password = request.data["password"]
-
-        user = User.objects.filter(email=email).first()
-
-        if user is None:
-            raise AuthenticationFailed("incorrect credentials")
-        
-        if not user.check_password(password):
-            raise AuthenticationFailed("incorrect credentials")
-        
-        payload = {
-            "id" : user.id,
-            "exp" : datetime.datetime.utcnow() + datetime.timedelta(hours=5),
-            "iat" : datetime.datetime.utcnow()
-        }
-
-        token = jwt.encode(payload, os.environ["SECRET_KEY"], algorithm="HS256")
         response = Response()
 
-        response.set_cookie(key="token", value=token)
-        response.data = {
-            "success" : True,
-            "token" : token
-        }
+        try:
+            email = request.data["email"]
+            password = request.data["password"]
+    
+            user = User.objects.filter(email=email).first()
+
+            if user is None:
+                raise AuthenticationFailed("incorrect credentials")
+        
+            if not user.check_password(password):
+                raise AuthenticationFailed("incorrect credentials")
+        
+            payload = {
+                "id" : user.id,
+                "exp" : datetime.datetime.utcnow() + datetime.timedelta(hours=5),
+                "iat" : datetime.datetime.utcnow()
+            }
+
+            token = jwt.encode(payload, os.environ["SECRET_KEY"], algorithm="HS256")
+    
+            response.set_cookie(key="token", value=token)
+            response.data = {
+                "success" : True,
+                "token" : token
+            }
+        
+        except:
+            response.data = {
+                "success" : False
+            }
+
         return response
+        
 
 class GetUser(APIView):
     def get(self, request):
@@ -82,10 +98,18 @@ class GetUser(APIView):
 class Logout(APIView):
     def post(self, request):
         response = Response()
-        response.delete_cookie("token")
 
-        response.data = {
-            "success" : True
-        }
+        try:
+            response.delete_cookie("token")
 
+            response.data = {
+                "success" : True
+            }
+
+        except:
+            response.data = {
+                "success" : False
+            }
+        
         return response
+
