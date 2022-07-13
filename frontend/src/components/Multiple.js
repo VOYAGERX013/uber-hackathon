@@ -37,6 +37,7 @@ function Multiple() {
   const [correct, setcorrect] = useState(false)
   const [wrong, setwrong] = useState(false)
   const [warn, setwarn] = useState(false)
+  const [style, setstyle] = useState(false)
   const [nexttext, setnexttext] = useState('Next Question')
   const closewarn = () => {
     setwarn(false)
@@ -65,6 +66,8 @@ function Multiple() {
         { id: 2, text: 'Santa Fe', isCorrect: false },
         { id: 3, text: 'Washington DC', isCorrect: true },
       ],
+      correctchoice: ['D', 3],
+      explanation: 'explanations......',
     },
     {
       text: 'What year was the Constitution of America written?',
@@ -74,6 +77,8 @@ function Multiple() {
         { id: 2, text: '1774', isCorrect: false },
         { id: 3, text: '1826', isCorrect: false },
       ],
+      correctchoice: ['A', 0],
+      explanation: 'explanations......',
     },
     {
       text: 'Who was the second president of the US?',
@@ -83,6 +88,8 @@ function Multiple() {
         { id: 2, text: 'Thomas Jefferson', isCorrect: false },
         { id: 3, text: 'Benjamin Franklin', isCorrect: false },
       ],
+      correctchoice: ['A', 0],
+      explanation: 'explanations......',
     },
     {
       text: 'What is the largest state in the US?',
@@ -92,6 +99,8 @@ function Multiple() {
         { id: 2, text: 'Texas', isCorrect: false },
         { id: 3, text: 'Montana', isCorrect: false },
       ],
+      correctchoice: ['B', 1],
+      explanation: 'explanations......',
     },
     {
       text: 'Which of the following countries DO NOT border the US?',
@@ -101,11 +110,12 @@ function Multiple() {
         { id: 2, text: 'Cuba', isCorrect: true },
         { id: 3, text: 'Mexico', isCorrect: false },
       ],
+      correctchoice: ['C', 2],
+      explanation: 'explanations......',
     },
   ]
 
   // Helper Functions
-
   /* A possible answer was clicked */
   const optionClicked = () => {
     if (selected == -1) {
@@ -140,14 +150,12 @@ function Multiple() {
     if (currentQuestion + 1 < questions.length) {
       console.log(currentQuestion)
       setnexttext('Next Question')
-      console.log('changed as next q')
     } else {
       setnexttext('View Results')
-      console.log('changed as view')
     }
   }, [selected])
   const next = () => {
-    setCurrentQuestion(currentQuestion + 1)
+    setstyle(false)
     setwrong(false)
     setcorrect(false)
     if (currentQuestion + 1 < questions.length) {
@@ -195,9 +203,32 @@ function Multiple() {
               {nexttext}
             </div>
           </div>
-          {/* <div className="dialogtext" id="explanation">
-            See Explanation
-          </div> */}
+          <div
+            className="showanswer"
+            id="correctshow"
+            onClick={() => {
+              setstyle(!style)
+            }}
+          >
+            View Answer and Explanations
+          </div>
+          <div className="answerwrap" id="correctanswerwrap">
+            <div className={style ? 'correctanswer' : 'close'}>
+              Correct answer:{' '}
+              <b>
+                {'('}
+                {questions[currentQuestion].correctchoice[0]}
+                {')'}{' '}
+                {
+                  questions[currentQuestion].options[
+                    questions[currentQuestion].correctchoice[1]
+                  ].text
+                }
+              </b>
+              <br></br>
+              {questions[currentQuestion].explanation}
+            </div>
+          </div>
         </BootstrapDialog>
       </div>
       <div id="dialogcontainer">
@@ -215,10 +246,31 @@ function Multiple() {
               {nexttext}
             </div>
           </div>
-
-          {/* <div className="dialogtext" id="explanation">
-            See Explanation
-          </div> */}
+          <div
+            className="showanswer"
+            onClick={() => {
+              setstyle(!style)
+            }}
+          >
+            View Answer and Explanations
+          </div>
+          <div className="answerwrap">
+            <div className={style ? 'answer' : 'close'}>
+              Correct answer:{' '}
+              <b>
+                {'('}
+                {questions[currentQuestion].correctchoice[0]}
+                {')'}{' '}
+                {
+                  questions[currentQuestion].options[
+                    questions[currentQuestion].correctchoice[1]
+                  ].text
+                }
+              </b>
+              <br></br>
+              {questions[currentQuestion].explanation}
+            </div>
+          </div>
         </BootstrapDialog>
       </div>
       <div id="dialogcontainer">
@@ -273,6 +325,34 @@ function Multiple() {
           <button className="restartbutton" onClick={() => restartGame()}>
             Restart practice
           </button>
+          <div
+            className="viewans"
+            onClick={() => {
+              setstyle(!style)
+            }}
+          >
+            View Answers and Explanations
+          </div>
+          <div className={style ? 'expand' : 'close'}>
+            {questions.map((e, ind) => {
+              return (
+                <div className="expandall">
+                  <div className="questionexpand">
+                    {ind + 1}. {e.text}
+                  </div>
+                  <b className="answerexpand">
+                    Answer: {'('}
+                    {e.correctchoice[0]}
+                    {') '}
+                    {e.options[1].text}
+                  </b>
+                  <div className="explanationexpand">
+                    Explanations: {e.explanation}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       ) : (
         <div className="questioncard">
@@ -313,6 +393,7 @@ function Multiple() {
               id="check"
               onClick={() => {
                 optionClicked()
+                setstyle(false)
               }}
             >
               Check Answer
