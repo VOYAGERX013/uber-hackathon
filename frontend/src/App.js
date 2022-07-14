@@ -11,6 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/interest" element={<Interest />}></Route>
           <Route exact path="/mc" element={<MC />}></Route>
         </Routes>
 

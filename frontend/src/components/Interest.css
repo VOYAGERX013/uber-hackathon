@@ -1,0 +1,95 @@
+.interest_title {
+    font-size: 35px;
+    color: #1a3a5c;
+    font-family: 'Mukta';
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 100px;
+  }
+  .interest_wrap {
+    width: 80%;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+    column-gap: 30px;
+  }
+  .skip_btn {
+    text-decoration: underline;
+    margin-top: 30px;
+    color: darkgray;
+  }
+  .false {
+    background-color: whitesmoke;
+    height: 200px;
+    font-family: 'Ubuntu';
+    color: #1a3a5c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 150ms;
+    font-size: 17px;
+  }
+  .false:hover {
+    border: 2px solid #ccd6dd;
+  }
+  .true {
+    cursor: pointer;
+    background-color: whitesmoke;
+    height: 200px;
+    font-family: 'Ubuntu';
+    font-size: 17px;
+    color: #1a3a5c;
+    border: 2px solid dark;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 2px solid #6c849d;
+    border-radius: 20px;
+    transition: 150ms;
+  }
+  .interest_sub {
+    margin-top: 20px;
+    color: gray;
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .done_btn {
+    margin-top: 100px;
+    background-color: #6c849d;
+    padding: 15px;
+    color: white;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 150ms;
+    font-size: 20px;
+    border: 1.5px solid white;
+  }
+  .done_btn:hover {
+    background-color: white;
+    color: #6c849d;
+    border: 1.5px solid #6c849d;
+  }
+  @media screen and (max-width: 730px) {
+    .interest_wrap {
+      align-items: center;
+      justify-content: center;
+      grid-template-columns: repeat(3, 130px);
+    }
+  }
+  
