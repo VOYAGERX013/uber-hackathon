@@ -35,7 +35,7 @@ class Link(APIView):
             if sent_types[sent] == "wav":
                 questions.append(text_quest_gen.wav_(sents[sent]))
             elif sent_types[sent] == "waa":
-                questions.append(text_quest_gen.wav_(sents[sent]))
+                questions.append(text_quest_gen.waa_(sents[sent]))
 
         questions = text_quest_gen.remove_empty(questions)
 
