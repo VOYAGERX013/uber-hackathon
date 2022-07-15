@@ -1,0 +1,80 @@
+.registerwrap {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f7f8;
+}
+.registersub {
+  color: #1a3a5c;
+  width: 100%;
+  font-size: 30px;
+  font-family: 'Mukta';
+  text-align: left;
+}
+
+.regbox {
+  margin-top: 80px;
+  width: 500px;
+  height: 550px;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background-color: white;
+  padding: 50px;
+  padding-left: 70px;
+  padding-right: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+.input {
+  width: 100%;
+}
+.wordwrap {
+  margin-top: 30px;
+  display: flex;
+  color: #6c849d;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width: 630px) {
+  .regbox {
+    width: 420px;
+  }
+}
+.loginword {
+  text-decoration: underline;
+  color: #1a3a5c;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 5px;
+}
+.regbtn {
+  background-color: #6c849d;
+  border: 1px solid #6c849d;
+  color: white;
+  width: 170px;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 10px;
+  transition: 150ms;
+  cursor: pointer;
+}
+.regbtn:hover {
+  background-color: white;
+  color: #6c849d;
+}
+.regwrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}

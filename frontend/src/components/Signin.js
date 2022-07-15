@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './Signin.css'
+import { Link } from 'react-router-dom'
 export default function Signin() {
   const [account, setaccount] = useState('')
   const [password, setpassword] = useState('')
@@ -30,7 +31,9 @@ export default function Signin() {
             />
           </div>
         </div>
-        <div className="signup">Sign up</div>
+        <Link to="/register">
+          <div className="signup">Sign up</div>
+        </Link>
       </div>
     </div>
   )
