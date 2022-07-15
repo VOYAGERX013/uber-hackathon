@@ -11,19 +11,7 @@ export default function Homepage() {
   const [switchtext, setswitch] = useState('to input direct text')
   const [placehd, setplacehd] = useState('Paste your link here!')
   const [rowsforta, setrowsforta] = useState(1)
-  const [inputstyle, setinputstyle] = useState(
-    <div className="inputlinkwrap">
-      <input
-        className="inputlink"
-        type="text"
-        placeholder={'Paste your link here!'}
-        value={link}
-        onChange={(e) => {
-          setlink(e.target.value)
-        }}
-      />
-    </div>,
-  )
+
   const [summary, setsummary] = useState(
     'Highlights (Extractive Summarization)',
   )
