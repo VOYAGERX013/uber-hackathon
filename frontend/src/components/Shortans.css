@@ -1,0 +1,18 @@
+.input_ans {
+  outline: none;
+  padding: 5px;
+  border-radius: 10px;
+  width: 80%;
+  height: 100px;
+  font-size: 23px;
+  color: #f69f8b;
+  padding-left: 20px;
+  border: 3px solid rgba(255, 201, 195, 0.3);
+}
+.input_ans::placeholder {
+  color: #ffc9c3;
+}
+.input_ans:focus {
+  border: 3px solid rgba(255, 201, 195, 1);
+  transition: 150ms;
+}

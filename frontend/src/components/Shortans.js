@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import './Multiple.css'
+import './Shortans.css'
 import { Link } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
-import { useNavigate } from 'react-router-dom'
 import Dialog from '@mui/material/Dialog'
 import PropTypes from 'prop-types'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -30,7 +29,7 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
 }
 
-function Multiple() {
+function Shortans() {
   // Properties
   const [showResults, setShowResults] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -39,12 +38,11 @@ function Multiple() {
   const [wrong, setwrong] = useState(false)
   const [warn, setwarn] = useState(false)
   const [style, setstyle] = useState(false)
-
-  const navigate = useNavigate()
   const [nexttext, setnexttext] = useState('Next Question')
   const closewarn = () => {
     setwarn(false)
   }
+  const [ans, setans] = useState('')
   const [back, setback] = useState(false)
   const [questioncount, setquestioncount] = useState([
     'focused',
@@ -53,67 +51,32 @@ function Multiple() {
     'unreached',
     'unreached',
   ])
-  const [choice, setchoice] = useState([
-    'choices',
-    'choices',
-    'choices',
-    'choices',
-  ])
   const [selected, setselectedchoice] = useState(-1)
   const questions = [
     {
       text: 'What is the capital of America?',
-      options: [
-        { id: 0, text: 'New York City', isCorrect: false },
-        { id: 1, text: 'Boston', isCorrect: false },
-        { id: 2, text: 'Santa Fe', isCorrect: false },
-        { id: 3, text: 'Washington DC', isCorrect: true },
-      ],
-      correctchoice: ['D', 3],
+      correctchoice: 'Washington DC',
       explanation: 'explanations......',
     },
     {
       text: 'What year was the Constitution of America written?',
-      options: [
-        { id: 0, text: '1787', isCorrect: true },
-        { id: 1, text: '1776', isCorrect: false },
-        { id: 2, text: '1774', isCorrect: false },
-        { id: 3, text: '1826', isCorrect: false },
-      ],
-      correctchoice: ['A', 0],
+      correctchoice: '1787',
       explanation: 'explanations......',
     },
     {
       text: 'Who was the second president of the US?',
-      options: [
-        { id: 0, text: 'John Adams', isCorrect: true },
-        { id: 1, text: 'Paul Revere', isCorrect: false },
-        { id: 2, text: 'Thomas Jefferson', isCorrect: false },
-        { id: 3, text: 'Benjamin Franklin', isCorrect: false },
-      ],
-      correctchoice: ['A', 0],
+
+      correctchoice: 'John Adams',
       explanation: 'explanations......',
     },
     {
       text: 'What is the largest state in the US?',
-      options: [
-        { id: 0, text: 'California', isCorrect: false },
-        { id: 1, text: 'Alaska', isCorrect: true },
-        { id: 2, text: 'Texas', isCorrect: false },
-        { id: 3, text: 'Montana', isCorrect: false },
-      ],
-      correctchoice: ['B', 1],
+      correctchoice: 'Alaska',
       explanation: 'explanations......',
     },
     {
       text: 'Which of the following countries DO NOT border the US?',
-      options: [
-        { id: 0, text: 'Canada', isCorrect: false },
-        { id: 1, text: 'Russia', isCorrect: true },
-        { id: 2, text: 'Cuba', isCorrect: true },
-        { id: 3, text: 'Mexico', isCorrect: false },
-      ],
-      correctchoice: ['C', 2],
+      correctchoice: 'Russia',
       explanation: 'explanations......',
     },
   ]
@@ -121,15 +84,14 @@ function Multiple() {
   // Helper Functions
   /* A possible answer was clicked */
   const optionClicked = () => {
-    if (selected == -1) {
+    if (ans == '') {
       setwarn(true)
     } else {
-      let flag = questions[currentQuestion].options[selected].isCorrect
-      setselcted(-1)
+      let correct = questions[currentQuestion].correctchoice.toLowerCase()
+      console.log(correct)
       // Increment the score
-      if (flag) {
+      if (correct == ans) {
         setScore(score + 1)
-        setchoice(['choices', 'choices', 'choices', 'choices'])
         let array = questioncount
         array[currentQuestion] = 'correct'
         if (currentQuestion + 1 < questions.length) {
@@ -137,6 +99,7 @@ function Multiple() {
         }
         setquestioncount(array)
         setcorrect(true)
+        setans('')
       } else {
         setwrong(true)
         let array = questioncount
@@ -145,7 +108,7 @@ function Multiple() {
           array[currentQuestion + 1] = 'focused'
         }
         setquestioncount(array)
-        setchoice(['choices', 'choices', 'choices', 'choices'])
+        setans('')
       }
     }
   }
@@ -156,7 +119,7 @@ function Multiple() {
     } else {
       setnexttext('View Results')
     }
-  }, [selected])
+  }, [currentQuestion])
   const next = () => {
     setstyle(false)
     setwrong(false)
@@ -182,12 +145,6 @@ function Multiple() {
       'unreached',
       'unreached',
     ])
-  }
-  const setselcted = (ind) => {
-    let arr = ['choices', 'choices', 'choices', 'choices']
-    arr[ind] = 'choices_selected'
-    setchoice(arr)
-    setselectedchoice(ind)
   }
   return (
     <div className="mcwrap">
@@ -217,17 +174,7 @@ function Multiple() {
           </div>
           <div className="answerwrap" id="correctanswerwrap">
             <div className={style ? 'correctanswer' : 'close'}>
-              Correct answer:{' '}
-              <b>
-                {'('}
-                {questions[currentQuestion].correctchoice[0]}
-                {')'}{' '}
-                {
-                  questions[currentQuestion].options[
-                    questions[currentQuestion].correctchoice[1]
-                  ].text
-                }
-              </b>
+              Correct answer: <b>{questions[currentQuestion].correctchoice}</b>
               <br></br>
               {questions[currentQuestion].explanation}
             </div>
@@ -259,17 +206,7 @@ function Multiple() {
           </div>
           <div className="answerwrap">
             <div className={style ? 'answer' : 'close'}>
-              Correct answer:{' '}
-              <b>
-                {'('}
-                {questions[currentQuestion].correctchoice[0]}
-                {')'}{' '}
-                {
-                  questions[currentQuestion].options[
-                    questions[currentQuestion].correctchoice[1]
-                  ].text
-                }
-              </b>
+              Correct answer: <b>{questions[currentQuestion].correctchoice}</b>
               <br></br>
               {questions[currentQuestion].explanation}
             </div>
@@ -325,14 +262,6 @@ function Multiple() {
             })}
           </div>
           <br></br>
-          <button
-            className="restartbutton"
-            onClick={() => {
-              navigate('/sa')
-            }}
-          >
-            Go to short answer practice
-          </button>
           <button className="restartbutton" onClick={() => restartGame()}>
             Restart practice
           </button>
@@ -351,12 +280,7 @@ function Multiple() {
                   <div className="questionexpand">
                     {ind + 1}. {e.text}
                   </div>
-                  <b className="answerexpand">
-                    Answer: {'('}
-                    {e.correctchoice[0]}
-                    {') '}
-                    {e.options[1].text}
-                  </b>
+                  <b className="answerexpand">Answer: {e.correctchoice}</b>
                   <div className="explanationexpand">
                     Explanations: {e.explanation}
                   </div>
@@ -379,17 +303,14 @@ function Multiple() {
           <div className="questiontext">{questions[currentQuestion].text}</div>
 
           <div className="choicewrap">
-            {questions[currentQuestion].options.map((option, ind) => {
-              return (
-                <div
-                  className={choice[ind]}
-                  key={option.id}
-                  onClick={() => setselcted(ind)}
-                >
-                  {option.text}
-                </div>
-              )
-            })}
+            <input
+              className="input_ans"
+              value={ans}
+              placeholder="Enter the answer..."
+              onChange={(e) => {
+                setans(e.target.value)
+              }}
+            />
           </div>
           <div className="buttons">
             <div
@@ -399,7 +320,6 @@ function Multiple() {
             >
               Back
             </div>
-
             <div
               className="button"
               id="check"
@@ -417,4 +337,4 @@ function Multiple() {
   )
 }
 
-export default Multiple
+export default Shortans

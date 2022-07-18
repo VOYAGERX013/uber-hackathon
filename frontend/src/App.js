@@ -6,6 +6,7 @@ import Home from './components/pages/Home'
 import MC from './components/pages/MultipleChoice'
 import Login from './components/pages/Login'
 import Interests from './components/pages/Interests'
+import SA from './components/pages/Shortanswer'
 import Register from './components/pages/Regiser'
 import 'font-awesome/css/font-awesome.min.css'
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/interest" element={<Interests />}></Route>
           <Route exact path="/mc" element={<MC />}></Route>
+          <Route exact path="/sa" element={<SA />}></Route>
         </Routes>
 
         {/* <Footer></Footer> */}
