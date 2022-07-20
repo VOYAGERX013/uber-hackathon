@@ -8,6 +8,8 @@ import Login from './components/pages/Login'
 import Interests from './components/pages/Interests'
 import SA from './components/pages/Shortanswer'
 import Register from './components/pages/Regiser'
+import About from './components/pages/Aboutus'
+import FAQ from './components/pages/FAQs'
 import 'font-awesome/css/font-awesome.min.css'
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/aboutus" element={<About />}></Route>
+          <Route exact path="/faq" element={<FAQ />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/interest" element={<Interests />}></Route>

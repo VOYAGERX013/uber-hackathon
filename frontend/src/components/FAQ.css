@@ -1,0 +1,17 @@
+.question {
+  margin-top: 50px;
+  font-size: 30px;
+  color: #1a3a5c;
+}
+.answer {
+  color: #5e7894;
+  font-size: 20px;
+  background-color: white;
+}
+#faqbg {
+  margin-top: -50px;
+}
+.faqwrap {
+  margin-top: 30px;
+  padding: 100px;
+}
