@@ -1,0 +1,57 @@
+.signinwrap {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f7f8;
+}
+.signinbox {
+  margin-top: 80px;
+  width: 370px;
+  height: 400px;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background-color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.signintitle {
+  color: #1a3a5c;
+  width: 100%;
+  font-size: 30px;
+  font-family: 'Mukta';
+  text-align: center;
+}
+.account {
+  margin-bottom: 20px;
+}
+.inputwrap {
+  margin-top: 30px;
+}
+.input {
+  outline: none;
+  padding: 5px;
+  border-radius: 10px;
+  width: 250px;
+  height: 40px;
+  padding-left: 10px;
+  border: 1.5px solid rgba(108, 132, 157, 0.3);
+}
+.input::placeholder {
+  color: #6c849d;
+  opacity: 0.2;
+}
+.input:focus {
+  border: 1.5px solid #6c849d;
+}
+.signup {
+  text-decoration: underline;
+  color: #1a3a5c;
+  margin-top: 30px;
+  cursor: pointer;
+}

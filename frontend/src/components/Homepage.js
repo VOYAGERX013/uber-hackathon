@@ -8,6 +8,10 @@ import { FiCopy } from 'react-icons/fi'
 export default function Homepage() {
   const [link, setlink] = useState('')
   const [high, sethigh] = useState(true)
+  const [switchtext, setswitch] = useState('to input direct text')
+  const [placehd, setplacehd] = useState('Paste your link here!')
+  const [rowsforta, setrowsforta] = useState(1)
+
   const [summary, setsummary] = useState(
     'Highlights (Extractive Summarization)',
   )
@@ -65,10 +69,11 @@ export default function Homepage() {
         </div>
         <div className="inputoutwrap">
           <div className="inputlinkwrap">
-            <input
+            <textarea
               className="inputlink"
+              rows={rowsforta}
               type="text"
-              placeholder={'Paste your link here!'}
+              placeholder={placehd}
               value={link}
               onChange={(e) => {
                 setlink(e.target.value)
@@ -78,6 +83,27 @@ export default function Homepage() {
           <div className="iconwrap">
             <BiSearchAlt className="iconsearch"></BiSearchAlt>
           </div>
+        </div>
+
+        <div className="change">
+          <div>...Or </div>
+          <b
+            className="specific"
+            onClick={() => {
+              if (switchtext == 'to input direct text') {
+                setswitch('to input link')
+                setplacehd('Paste the text here!')
+                setrowsforta(20)
+              } else {
+                setswitch('to input direct text')
+                setplacehd('Paste your link here!')
+                setrowsforta(1)
+              }
+            }}
+          >
+            CLICK ME{' '}
+          </b>
+          <div>{switchtext}</div>
         </div>
         <BsChevronDoubleDown className="icondown"></BsChevronDoubleDown>
       </div>

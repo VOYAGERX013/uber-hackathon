@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import '../../App.css'
-import Interests from '../Interest'
+import Interest from '../Interest'
 
 function Interests() {
   return (
     <>
-      <Interests />
+      <Interest />
     </>
   )
 }
 
-export default Home
+export default Interests
