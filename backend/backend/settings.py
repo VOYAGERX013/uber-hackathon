@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
     'questgen.apps.QuestgenConfig',
+    'content_suggestion.apps.ContentSuggestionConfig',
     'corsheaders',
 ]
 

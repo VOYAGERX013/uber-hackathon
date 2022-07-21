@@ -19,6 +19,12 @@ def summarize(text, per):
     for word in word_frequencies.keys():
         word_frequencies[word]=word_frequencies[word]/max_frequency
     sentence_tokens= [sent for sent in doc.sents]
+
+    if len(sentence_tokens) * per > 30:
+        select_length = 30
+    else:
+        select_length=int(len(sentence_tokens)*per)
+
     sentence_scores = {}
     for sent in sentence_tokens:
         for word in sent:
@@ -27,8 +33,9 @@ def summarize(text, per):
                     sentence_scores[sent]=word_frequencies[word.text.lower()]
                 else:
                     sentence_scores[sent]+=word_frequencies[word.text.lower()]
-    select_length=int(len(sentence_tokens)*per)
+
     summary=nlargest(select_length, sentence_scores,key=sentence_scores.get)
     final_summary=[word.text for word in summary]
     summary=''.join(final_summary)
+
     return summary

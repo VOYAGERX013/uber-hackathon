@@ -65,7 +65,8 @@ def check_in_parenth(doc, pos):
     if doc[token].text == "(":
       parenth_boundaries.append([token])
     if doc[token].text == ")":
-      parenth_boundaries[-1].append(token)
+      if len(parenth_boundaries) > 0:
+        parenth_boundaries[-1].append(token)
   
   for boundary in parenth_boundaries:
     if pos > boundary[0] and pos < boundary[1]:
@@ -244,7 +245,7 @@ def wav_(sentence):
         base_verb_idx = None
 
         for word in range(num+2, len(rough_tags)):
-          if fine_tags[word] == "VB" or (fine_tags[word] == "VBG" and doc[word-1] == "for"):
+          if fine_tags[word] == "VB" or (fine_tags[word] == "VBG" and doc[word-1].text == "for"):
             base_verb_idx = word
             break
         if base_verb_idx is None:
