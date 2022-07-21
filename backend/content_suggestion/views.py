@@ -2,16 +2,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Interest
 from base.models import User
+from .modules import suggest_articles
 
 class New_Interest(APIView):
     def post(self, request):
         response = Response()
+
         try:
             email = request.data["email"]
             interest = request.data["interest"]
-
-            print(email)
-            print(interest)
 
             user = User.objects.get(email=email)
 
@@ -21,6 +20,7 @@ class New_Interest(APIView):
             response.data = {
                 "success" : True
             }
+
         except:
             response.data = {
                 "success" : False
@@ -28,3 +28,16 @@ class New_Interest(APIView):
 
         return response
 
+class Get_Content(APIView):
+    def post(self, request):
+        response = Response()
+        email = request.data["email"]
+        
+        try:
+            pass
+        except:
+            response.data = {
+                "success" : False
+            }
+
+        return response
