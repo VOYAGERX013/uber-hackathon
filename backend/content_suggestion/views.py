@@ -32,12 +32,19 @@ class Get_Content(APIView):
     def post(self, request):
         response = Response()
         email = request.data["email"]
-        
-        try:
-            pass
-        except:
-            response.data = {
-                "success" : False
-            }
+
+        output_suggestions = suggest_articles.suggest(email, 10)
+        response.data = output_suggestions
+
+        return response
+
+class Get_Definition(APIView):
+    def post(self, request):
+        response = Response()
+        email = request.data["email"]
+
+        definition_dict = suggest_articles.suggest_definition(email)
+
+        response.data = definition_dict
 
         return response
