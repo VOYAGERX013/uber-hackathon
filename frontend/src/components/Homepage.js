@@ -46,7 +46,7 @@ export default function Homepage() {
     <div className="wrap">
       <div className="user">
         <div className="name">IN BRIEF</div>
-        <div className="description">Sum your articles and learn with us</div>
+        <div className="desc">Sum your articles and learn with us</div>
         <div className="records">
           <div className="recordswrap">
             <div className="number">60+</div>

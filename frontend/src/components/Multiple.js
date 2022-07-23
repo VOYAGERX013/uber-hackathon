@@ -258,7 +258,7 @@ function Multiple() {
             View Answer and Explanations
           </div>
           <div className="answerwrap">
-            <div className={style ? 'answer' : 'close'}>
+            <div className={style ? 'answerss' : 'close'}>
               Correct answer:{' '}
               <b>
                 {'('}
