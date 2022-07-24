@@ -7,6 +7,9 @@
   align-items: center;
   background-color: #f5f7f8;
 }
+.linkreg{
+  text-decoration: none;
+}
 .registersub {
   color: #1a3a5c;
   width: 100%;
@@ -14,7 +17,57 @@
   font-family: 'Mukta';
   text-align: left;
 }
+.backreg{
+  color: #1a3a5c;
+  text-decoration: underline;
+  top: 0;
+  cursor: pointer;
+}
 
+.inputsearch {
+  border: none;
+  width: 100%;
+  color: #1a3a5C;
+  padding-left: 5px;
+  resize: none;
+}
+.inputsearch:focus {
+  border: none;
+  outline: none;
+}
+
+.gridding{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  
+}
+.gridinnerwrap{
+  background: white;
+  border: 1.5px solid lightgray;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 150ms;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 10px;
+  color: gray;
+}
+.gridinnerwrap:hover{
+  background-color: lightgray;
+}
+.inputsearchwrap {
+  margin-top: 20px;
+  background-color: white;
+  border: 1px solid #1a3a5c;
+  padding: 10px;
+  border-radius: 30px;
+  width: 100%;
+}
+.inputsearch::placeholder {
+  color: #6c849d;
+  opacity: 0.5;
+}
 .regbox {
   margin-top: 80px;
   width: 500px;

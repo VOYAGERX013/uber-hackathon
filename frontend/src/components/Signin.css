@@ -40,11 +40,13 @@
   width: 250px;
   height: 40px;
   padding-left: 10px;
+  color: #1a3a5c;
+
   border: 1.5px solid rgba(108, 132, 157, 0.3);
 }
 .input::placeholder {
   color: #6c849d;
-  opacity: 0.2;
+  opacity: 0.5;
 }
 .input:focus {
   border: 1.5px solid #6c849d;

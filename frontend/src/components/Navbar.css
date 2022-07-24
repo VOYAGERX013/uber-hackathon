@@ -11,7 +11,10 @@
   top: 0;
   z-index: 100;
 }
-
+.logo{
+  width: 100px;
+  height: 100%
+}
 .navbar-logo {
   color: #1a3a5c;
   margin-left: 20px;
@@ -49,13 +52,14 @@
 }
 .nav-m {
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(6, auto);
   grid-gap: 10px;
   list-style: none;
   text-align: center;
   width: 70vw;
   margin-right: 20px;
   justify-content: end;
+  align-items: center;
 }
 .nav-item {
   height: 80px;
@@ -84,6 +88,25 @@
   padding-right: 20px;
   transition: 150ms;
   margin-left: 10px;
+}
+.avatarwrap{
+  color: #1a3a5c;
+  display: flex;
+  height: 50px;
+  width: 50px;
+  flex-direction: row;
+  border: solid 1.5px rgba(26, 58, 92, 0.3);
+  border-radius: 50%;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+  transition: 150ms;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 150ms;
+}
+.avatarwrap:hover{
+  background-color: rgba(26, 58, 92, 0.1);
 }
 .logindiv:hover {
   background-color: #1a3a5c;

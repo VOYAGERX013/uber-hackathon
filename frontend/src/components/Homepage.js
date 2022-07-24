@@ -1,11 +1,70 @@
 import React, { useState, useEffect } from 'react'
 import './Homepage.css'
 import { BiSearchAlt } from 'react-icons/bi'
+import { useNavigate } from 'react-router-dom'
 import { BsChevronDoubleDown } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { FiCopy } from 'react-icons/fi'
+import axios from "axios"
+import { styled } from '@mui/material/styles'
+import Dialog from '@mui/material/Dialog'
+import PropTypes from 'prop-types'
+import DialogTitle from '@mui/material/DialogTitle'
+
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}))
+
+const BootstrapDialogTitle = (props) => {
+  const { children, ...other } = props
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+    </DialogTitle>
+  )
+}
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+}
+
 
 export default function Homepage() {
+  const [status, setstatus] = useState(false)
+  const [username, setusername] = useState("")
+  const [def, setdef] = useState(false)
+  const [word, setword] = useState("word")
+  const [definition, setdefinition] = useState("definition")
+  const closedef = () =>{
+    setdef(false)
+  }
+  const navigate = useNavigate()
+  useEffect(()=>{
+    axios.post('http://localhost:8000/api/get-user/', null, { withCredentials: true })
+        .then(res => {
+          console.log(res.data)
+          setstatus(res.data.success)
+          setusername(res.data.result.username)
+        })
+        .catch(err => console.log(err))
+  })
+
+  const logout = (()=>{
+    axios.post("http://localhost:8000/api/logout/", null, { withCredentials: true })
+    navigate("/login")
+  })
+  
+  useEffect(()=>{
+    setdef(true)
+  },[status])
+
   const [link, setlink] = useState('')
   const [high, sethigh] = useState(true)
   const [switchtext, setswitch] = useState('to input direct text')
@@ -15,40 +74,45 @@ export default function Homepage() {
   const [summary, setsummary] = useState(
     'Highlights (Extractive Summarization)',
   )
-  const [suggestlink, setsuggestlink] = useState('/')
-  const [suggest, suggestedcontent] = useState([
-    {
-      title: 'Abstractive Text Summarization - Papers With Code',
-      subtitle:
-        'Abstractive Text Summarization is the task of generating a short and concise summary that captures the salient ideas of the source text.',
-      link: 'https://paperswithcode.com/task/abstractive-text-summarization',
-    },
-    {
-      title: 'Abstractive Text Summarization - Papers With Code',
-      subtitle:
-        'Abstractive Text Summarization is the task of generating a short and concise summary that captures the salient ideas of the source text.',
-      link: 'https://paperswithcode.com/task/abstractive-text-summarization',
-    },
-    {
-      title: 'Abstractive Text Summarization - Papers With Code',
-      subtitle:
-        'Abstractive Text Summarization is the task of generating a short and concise summary that captures the salient ideas of the source text.',
-      link: 'https://paperswithcode.com/task/abstractive-text-summarization',
-    },
-  ])
-
-  const [suggeststyle, setsuggeststyle] = useState(false)
-  const openurl = (ind) => {
-    window.open(suggest[ind].link, '_blank', 'noopener,noreferrer')
-  }
-  useState(() => {}, [suggestlink])
+  
   return (
     <div className="wrap">
+      <div id="dialogcontainer">
+        <BootstrapDialog
+          className="dialog"
+          id="correctdialog"
+          aria-labelledby="customized-dialog-title"
+          open={def}
+          onClose={closedef}
+        >
+          <div className="dialogtext" id="deftitle">
+           WORD of the day
+          </div>
+          <b className="dialogtext" id="defword">
+            {word}
+          </b>
+          <div className="dialogtext" id="defdef">
+            {definition}
+            </div>
+        </BootstrapDialog>
+      </div>
       <div className="user">
+        <div className="userheader">
+        {status ? (
+          <div>
+            <div onClick = {logout}>LOGOUT</div>
+          <div className='name' id = "welcometitle">
+            Hello, {username}
+          </div>
+          
+        <div className="desclogged">Learn with ease, choose InBrief</div>
+          </div>
+        ):(
+          <div>
         <div className="name">IN BRIEF</div>
-        <div className="desc">Sum your articles and learn with us</div>
-        <div className="records">
-          <div className="recordswrap">
+        <div className="desc">Learn with ease, choose InBrief</div>
+        <div className = "records">
+        <div className="recordswrap">
             <div className="number">60+</div>
             <div className="recordsdescription">
               Videos<br></br>Processed
@@ -66,6 +130,9 @@ export default function Homepage() {
               Videos<br></br>Processed
             </div>
           </div>
+          </div>
+          </div>)}
+          
         </div>
         <div className="inputoutwrap">
           <div className="inputlinkwrap">
@@ -147,7 +214,7 @@ export default function Homepage() {
           <div>{summary}</div>
         </div>
       </div>
-      <div
+      {/* <div
         className="suggested"
         onClick={() => {
           setsuggeststyle(true)
@@ -155,31 +222,7 @@ export default function Homepage() {
       >
         View More Suggested Contents...
       </div>
-      <div className={suggeststyle ? 'suggestedcontentlist' : 'close'}>
-        {suggest.map((e, index) => {
-          return (
-            <div
-              className="suggestedwrap"
-              onClick={() => {
-                openurl(index)
-              }}
-            >
-              <div className="suggestedtitle">{e.title}</div>
-              <div className="suggestedsub">
-                {e.subtitle.substring(0, 120)}...
-              </div>
-            </div>
-          )
-        })}
-        <div
-          className="collapse"
-          onClick={() => {
-            setsuggeststyle(false)
-          }}
-        >
-          Collapse ⏶
-        </div>
-      </div>
+       */}
     </div>
   )
 }

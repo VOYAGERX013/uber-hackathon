@@ -8,6 +8,31 @@
   margin-top: 80px;
   margin-bottom: 200px;
 }
+.loginnone{
+    display: none;
+    width: 0px;
+    height: 0px;
+}
+#welcometitle{margin-top: 60px;
+
+}
+#deftitle{
+  padding-bottom: 15px;
+  font-size: 30px
+}
+#defword{
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: #1a3a5c;
+  font-size: 21px
+}
+#defdef{
+  padding-top: 10px;
+  padding-bottom: 30px;
+  color: #6c849d;
+  font-size: 16px;
+
+}
 .name {
   color: #f69f8b;
   font-weight: 700;
@@ -23,6 +48,15 @@
   margin-top: -20px;
   width: 100%;
   text-align: center;
+}
+.desclogged{
+  
+  color: #77c1c6;
+  font-size: 25px;
+  margin-top: -20px;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
 }
 .change {
   display: flex;
@@ -41,7 +75,7 @@
   font-size: 18px;
 }
 .records {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -218,7 +252,7 @@
   font-size: 20px;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ecf4ff;
+  border: 1.5px solid rgba(108, 132, 157, 0.5);
   position: relative;
 }
 .iconcopy {
@@ -248,7 +282,7 @@
   width: 100%;
 }
 .suggested {
-  width: 90%;
+  width: 100%;
   background-color: #ecf4ff;
   padding: 15px;
   font-size: 15px;
@@ -283,7 +317,7 @@
 }
 .suggestedwrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin-top: 15px;
   width: 100%;
   margin-bottom: 15px;

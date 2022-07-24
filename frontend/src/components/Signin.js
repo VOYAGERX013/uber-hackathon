@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import './Signin.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from "axios"
+
 export default function Signin() {
   const [account, setaccount] = useState('')
   const [password, setpassword] = useState('')
+  const navigate = useNavigate()
+  const signin = () =>{
+    axios.post('http://localhost:8000/api/login/', {
+        email: account,
+        password: password
+    }, {withCredentials: true})
+    .then(res => {
+        console.log(res)
+        navigate('/')
+    })
+    .catch(err => console.log(err))
+  }
 
   return (
     <div className="signinwrap">
@@ -32,7 +46,7 @@ export default function Signin() {
             />
           </div>
         </div>
-        <div className="btn_signin">Sign in</div>
+        <div className="btn_signin" onClick={signin}>Sign in</div>
         <Link to="/register">
           <div className="signup">Sign up</div>
         </Link>

@@ -8,6 +8,7 @@ import Login from './components/pages/Login'
 import Interests from './components/pages/Interests'
 import SA from './components/pages/Shortanswer'
 import Register from './components/pages/Register'
+import Suggestions from './components/pages/suggestions'
 import About from './components/pages/Aboutus'
 import FAQ from './components/pages/FAQs'
 import 'font-awesome/css/font-awesome.min.css'
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/interest" element={<Interests />}></Route>
           <Route exact path="/mc" element={<MC />}></Route>
           <Route exact path="/sa" element={<SA />}></Route>
+          <Route exact path="/suggest" element={<Suggestions />}></Route>
         </Routes>
 
         {/* <Footer></Footer> */}

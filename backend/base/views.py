@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
 from .models import User
+from content_suggestion.models import Interest
 import datetime
 import jwt
 from dotenv import load_dotenv
 import os
+from .modules import append_to_db
 
 load_dotenv()
 
@@ -16,22 +18,37 @@ class Register(APIView): # Class for registering a user when the register route 
         response = Response()
 
         # If the user is saved successfully, send a success message, else sent a failure message
-        try:
-            serializer = UserSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-    
-            response.data = {
-                "success" : True
-            }
-        except:
-            response.data = {
-                "success" : False
-            }
+        # try:
+        print("Got through")
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        print("Got through")
+        print(request.data["email"])
+        print(request.data["username"])
+        print(request.data["password"])
+        find_user = User.objects.get(email=request.data["email"])
+        print(find_user)
+        new_interest = Interest(email=find_user, interest=request.data["interest"])
+        print(request.data["interest"])
+        new_interest.save()
+
+        response.data = {
+            "success" : True
+        }
+        # except:
+        # response.data = {
+        #     "success" : False
+        # }
 
         return response
-            
 
+class Append_to_db(APIView):
+    def post(self, request):
+        append_to_db.append(request.data["email"])
+
+            
 class Login(APIView): # Class for logging a user when the login in route is hit in urls.py
     def post(self, request):
         response = Response()
@@ -62,6 +79,8 @@ class Login(APIView): # Class for logging a user when the login in route is hit 
     
             # Setting cookie with value of the token
             response.set_cookie(key="token", value=token)
+            print("Cookie check")
+            print(request.COOKIES.get("token"))
             response.data = {
                 "success" : True,
                 "token" : token
@@ -74,9 +93,8 @@ class Login(APIView): # Class for logging a user when the login in route is hit 
 
         return response
         
-
 class GetUser(APIView): # Class for getting user credentials
-    def get(self, request):
+    def post(self, request):
         response = Response()
         # Get the token from cookies
         token = request.COOKIES.get("token")
@@ -88,7 +106,7 @@ class GetUser(APIView): # Class for getting user credentials
             }
 
             return response
-
+        print(token)
         try:
             # Decode the id from the jwt token
             payload = jwt.decode(token, os.environ["SECRET_KEY"], algorithms=["HS256"])
