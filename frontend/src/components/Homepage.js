@@ -190,7 +190,7 @@ export default function Homepage() {
               className={high ? 'not_selected' : 'selected'}
               onClick={() => {
                 sethigh(false)
-                setsummary('Summary (Abstractive Summarization)')
+                setsummary("An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.")
               }}
             >
               Summary
