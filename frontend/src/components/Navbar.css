@@ -11,9 +11,30 @@
   top: 0;
   z-index: 100;
 }
-.logo{
-  width: 100px;
-  height: 100%
+.logo {
+  margin-left: 20px;
+  top: 0;
+  text-align: start;
+  height: 50px;
+  left: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 25px;
+}
+.navbar-logo {
+  color: #1a3a5c;
+  margin-left: 20px;
+  top: 0;
+  height: 100%;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 25px;
 }
 .navbar-logo {
   color: #1a3a5c;
@@ -89,7 +110,7 @@
   transition: 150ms;
   margin-left: 10px;
 }
-.avatarwrap{
+.avatarwrap {
   color: #1a3a5c;
   display: flex;
   height: 50px;
@@ -105,7 +126,7 @@
   cursor: pointer;
   transition: 150ms;
 }
-.avatarwrap:hover{
+.avatarwrap:hover {
   background-color: rgba(26, 58, 92, 0.1);
 }
 .logindiv:hover {
