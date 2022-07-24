@@ -55,3 +55,19 @@
   margin-top: 30px;
   cursor: pointer;
 }
+.btn_signin {
+  width: 180px;
+  background-color: #1a3a5c;
+  color: white;
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 150ms;
+  border: 1px solid #1a3a5c;
+}
+.btn_signin:hover {
+  background-color: white;
+  color: #1a3a5c;
+}

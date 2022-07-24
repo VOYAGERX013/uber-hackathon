@@ -24,6 +24,7 @@ export default function Signin() {
             <input
               className="input"
               value={password}
+              type="password"
               placeholder="Enter your password"
               onChange={(e) => {
                 setpassword(e.target.value)
@@ -31,6 +32,7 @@ export default function Signin() {
             />
           </div>
         </div>
+        <div className="btn_signin">Sign in</div>
         <Link to="/register">
           <div className="signup">Sign up</div>
         </Link>
