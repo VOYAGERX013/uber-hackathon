@@ -74,6 +74,35 @@ export default function Homepage() {
   const [summary, setsummary] = useState(
     'Highlights (Extractive Summarization)',
   )
+
+  const [abstractive, setAbstractive] = useState("")
+
+  const handleLink = () => {
+    axios.post("http://localhost:8000/api/summarize/link/", {
+        link: link
+    }, {
+        withCredentials: true
+    })
+    .then(res => {
+        setsummary(`${res.data.summary.substr(0, 2000)}...`)
+        window.scroll({
+            top: 1000,
+            left: 0, 
+            behavior: 'smooth',
+        });
+
+        setAbstractive("An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.")
+
+        // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
+        //     link: link
+        // }, {
+        //     withCredentials: true
+        // })
+        // .then(res => {
+        //     ""
+        // })
+    })
+  }
   
   return (
     <div className="wrap">
@@ -148,7 +177,7 @@ export default function Homepage() {
             />
           </div>
           <div className="iconwrap">
-            <BiSearchAlt className="iconsearch"></BiSearchAlt>
+            <BiSearchAlt className="iconsearch" onClick={handleLink}></BiSearchAlt>
           </div>
         </div>
 
@@ -181,7 +210,7 @@ export default function Homepage() {
               className={high ? 'selected' : 'not_selected'}
               onClick={() => {
                 sethigh(true)
-                setsummary('Highlights (Extractive Summarization)')
+                // setsummary('Highlights (Extractive Summarization)')
               }}
             >
               Highlights
@@ -190,7 +219,8 @@ export default function Homepage() {
               className={high ? 'not_selected' : 'selected'}
               onClick={() => {
                 sethigh(false)
-                setsummary("An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.")
+                {link != "" && setsummary(abstractive)}
+                // setsummary('Summary (Abstractive Summarization)')
               }}
             >
               Summary
