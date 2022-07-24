@@ -24,12 +24,12 @@ from nltk.corpus import brown
 from similarity.normalized_levenshtein import NormalizedLevenshtein
 from nltk.tokenize import sent_tokenize
 from flashtext import KeywordProcessor
-from mcq_gen_package.Questgen.encoding.encoding import beam_search_decoding
-from mcq_gen_package.Questgen.mcq.mcq import tokenize_sentences
-from mcq_gen_package.Questgen.mcq.mcq import get_keywords
-from mcq_gen_package.Questgen.mcq.mcq import get_sentences_for_keyword
-from mcq_gen_package.Questgen.mcq.mcq import generate_questions_mcq
-from mcq_gen_package.Questgen.mcq.mcq import generate_normal_questions
+from .Questgen.encoding.encoding import beam_search_decoding
+from .Questgen.mcq.mcq import tokenize_sentences
+from .Questgen.mcq.mcq import get_keywords
+from .Questgen.mcq.mcq import get_sentences_for_keyword
+from .Questgen.mcq.mcq import generate_questions_mcq
+from .Questgen.mcq.mcq import generate_normal_questions
 import time
 
 class QGen:
@@ -46,7 +46,7 @@ class QGen:
         self.model = model
         self.nlp = spacy.load('en_core_web_sm')
 
-        self.s2v = Sense2Vec().from_disk('s2v_old')
+        self.s2v = Sense2Vec().from_disk('D:/Github/uber-hackathon/backend/questgen/modules/mcq_gen_package/s2v_old')
 
         self.fdist = FreqDist(brown.words())
         self.normalized_levenshtein = NormalizedLevenshtein()
