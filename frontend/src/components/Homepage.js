@@ -100,10 +100,6 @@ export default function Homepage() {
           behavior: 'smooth',
         })
 
-        setAbstractive(
-          "An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.",
-        )
-
         // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
         //     link: link
         // }, {
