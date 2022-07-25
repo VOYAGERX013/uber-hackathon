@@ -6,6 +6,7 @@ from .modules import suggest_articles
 from emails.models import Email
 from datetime import datetime
 import wikipedia
+from questgen.modules import script_extract
 
 class New_Interest(APIView):
     def post(self, request):
@@ -82,14 +83,14 @@ class Fetch_Suggestions(APIView):
         user = User.objects.get(email=email)
         user_suggestions = Email.objects.filter(email=user)
 
-        format_suggestions = {
-            "titles": [],
-            "links": [],
-        }
+        format_suggestions = []
 
         for suggestion in user_suggestions:
-            format_suggestions["titles"].append(suggestion.article_title)
-            format_suggestions["links"].append(suggestion.article_link)
+            format_suggestions.append({
+                "title" : suggestion.article_title,
+                "link" : suggestion.article_link,
+                "subtitle" : script_extract.get_content(suggestion.article_link)[0:100]
+            })
 
         response.data = {
             "success" : True,

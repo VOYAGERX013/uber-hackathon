@@ -11,7 +11,6 @@ import Dialog from '@mui/material/Dialog'
 import PropTypes from 'prop-types'
 import DialogTitle from '@mui/material/DialogTitle'
 
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -76,6 +75,7 @@ export default function Homepage() {
   )
 
   const [abstractive, setAbstractive] = useState("")
+  const [extractive, setExtractive] = useState("")
 
   const handleLink = () => {
     axios.post("http://localhost:8000/api/summarize/link/", {
@@ -85,13 +85,12 @@ export default function Homepage() {
     })
     .then(res => {
         setsummary(`${res.data.summary.substr(0, 2000)}...`)
+        setExtractive(`${res.data.summary.substr(0, 2000)}...`)
         window.scroll({
             top: 1000,
             left: 0, 
             behavior: 'smooth',
         });
-
-        setAbstractive("An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.")
 
         // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
         //     link: link
@@ -99,7 +98,7 @@ export default function Homepage() {
         //     withCredentials: true
         // })
         // .then(res => {
-        //     ""
+        //     setAbstractive(res.data.summary)
         // })
     })
   }
@@ -210,6 +209,7 @@ export default function Homepage() {
               className={high ? 'selected' : 'not_selected'}
               onClick={() => {
                 sethigh(true)
+                {link != "" && setsummary(extractive)}
                 // setsummary('Highlights (Extractive Summarization)')
               }}
             >
