@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import { BsChevronDoubleDown } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { FiCopy } from 'react-icons/fi'
-import axios from "axios"
+import axios from 'axios'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import PropTypes from 'prop-types'
 import DialogTitle from '@mui/material/DialogTitle'
-
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -35,35 +34,40 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
 }
 
-
 export default function Homepage() {
+  const [stat, setstat] = useState(false)
   const [status, setstatus] = useState(false)
-  const [username, setusername] = useState("")
+  const [username, setusername] = useState('')
   const [def, setdef] = useState(false)
-  const [word, setword] = useState("word")
-  const [definition, setdefinition] = useState("definition")
-  const closedef = () =>{
+  const [word, setword] = useState('word')
+  const [definition, setdefinition] = useState('definition')
+  const closedef = () => {
     setdef(false)
   }
   const navigate = useNavigate()
-  useEffect(()=>{
-    axios.post('http://localhost:8000/api/get-user/', null, { withCredentials: true })
-        .then(res => {
-          console.log(res.data)
-          setstatus(res.data.success)
-          setusername(res.data.result.username)
-        })
-        .catch(err => console.log(err))
+  useEffect(() => {
+    axios
+      .post('http://localhost:8000/api/get-user/', null, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data)
+        setstatus(res.data.success)
+        setusername(res.data.result.username)
+      })
+      .catch((err) => console.log(err))
   })
 
-  const logout = (()=>{
-    axios.post("http://localhost:8000/api/logout/", null, { withCredentials: true })
-    navigate("/login")
-  })
-  
-  useEffect(()=>{
+  const logout = () => {
+    axios.post('http://localhost:8000/api/logout/', null, {
+      withCredentials: true,
+    })
+    navigate('/login')
+  }
+
+  useEffect(() => {
     setdef(true)
-  },[status])
+  }, [status])
 
   const [link, setlink] = useState('')
   const [high, sethigh] = useState(true)
@@ -75,23 +79,30 @@ export default function Homepage() {
     'Highlights (Extractive Summarization)',
   )
 
-  const [abstractive, setAbstractive] = useState("")
+  const [abstractive, setAbstractive] = useState('')
 
   const handleLink = () => {
-    axios.post("http://localhost:8000/api/summarize/link/", {
-        link: link
-    }, {
-        withCredentials: true
-    })
-    .then(res => {
+    axios
+      .post(
+        'http://localhost:8000/api/summarize/link/',
+        {
+          link: link,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
         setsummary(`${res.data.summary.substr(0, 2000)}...`)
         window.scroll({
-            top: 1000,
-            left: 0, 
-            behavior: 'smooth',
-        });
+          top: 1000,
+          left: 0,
+          behavior: 'smooth',
+        })
 
-        setAbstractive("An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.")
+        setAbstractive(
+          "An economist is a person who studies the relationship between a society's resources and its production or output, and their opinions help shape economic policies related to interest rates, tax laws, employment programs, international trade agreements, and corporate strategies.",
+        )
 
         // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
         //     link: link
@@ -101,9 +112,9 @@ export default function Homepage() {
         // .then(res => {
         //     ""
         // })
-    })
+      })
   }
-  
+
   return (
     <div className="wrap">
       <div id="dialogcontainer">
@@ -115,53 +126,53 @@ export default function Homepage() {
           onClose={closedef}
         >
           <div className="dialogtext" id="deftitle">
-           WORD of the day
+            WORD of the day
           </div>
           <b className="dialogtext" id="defword">
             {word}
           </b>
           <div className="dialogtext" id="defdef">
             {definition}
-            </div>
+          </div>
         </BootstrapDialog>
       </div>
       <div className="user">
         <div className="userheader">
-        {status ? (
-          <div>
-            <div onClick = {logout}>LOGOUT</div>
-          <div className='name' id = "welcometitle">
-            Hello, {username}
-          </div>
-          
-        <div className="desclogged">Learn with ease, choose InBrief</div>
-          </div>
-        ):(
-          <div>
-        <div className="name">IN BRIEF</div>
-        <div className="desc">Learn with ease, choose InBrief</div>
-        <div className = "records">
-        <div className="recordswrap">
-            <div className="number">60+</div>
-            <div className="recordsdescription">
-              Videos<br></br>Processed
+          {status ? (
+            <div>
+              <div onClick={logout}>LOGOUT</div>
+              <div className="name" id="welcometitle">
+                Hello, {username}
+              </div>
+
+              <div className="desclogged">Learn with ease, choose InBrief</div>
             </div>
-          </div>
-          <div className="recordswrap">
-            <div className="number">60+</div>
-            <div className="recordsdescription">
-              Videos<br></br>Processed
+          ) : (
+            <div>
+              <div className="name">IN BRIEF</div>
+              <div className="desc">Learn with ease, choose InBrief</div>
+              <div className="records">
+                <div className="recordswrap">
+                  <div className="number">60+</div>
+                  <div className="recordsdescription">
+                    Videos<br></br>Processed
+                  </div>
+                </div>
+                <div className="recordswrap">
+                  <div className="number">60+</div>
+                  <div className="recordsdescription">
+                    Videos<br></br>Processed
+                  </div>
+                </div>
+                <div className="recordswrap">
+                  <div className="number">60+</div>
+                  <div className="recordsdescription">
+                    Videos<br></br>Processed
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="recordswrap">
-            <div className="number">60+</div>
-            <div className="recordsdescription">
-              Videos<br></br>Processed
-            </div>
-          </div>
-          </div>
-          </div>)}
-          
+          )}
         </div>
         <div className="inputoutwrap">
           <div className="inputlinkwrap">
@@ -177,7 +188,10 @@ export default function Homepage() {
             />
           </div>
           <div className="iconwrap">
-            <BiSearchAlt className="iconsearch" onClick={handleLink}></BiSearchAlt>
+            <BiSearchAlt
+              className="iconsearch"
+              onClick={handleLink}
+            ></BiSearchAlt>
           </div>
         </div>
 
@@ -219,7 +233,9 @@ export default function Homepage() {
               className={high ? 'not_selected' : 'selected'}
               onClick={() => {
                 sethigh(false)
-                {link != "" && setsummary(abstractive)}
+                {
+                  link != '' && setsummary(abstractive)
+                }
                 // setsummary('Summary (Abstractive Summarization)')
               }}
             >
