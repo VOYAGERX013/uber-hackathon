@@ -15,10 +15,6 @@ export default function Signup() {
   const [suggest, setsuggestions] = useState(["Loading..."])
   const navigate = useNavigate()
   const register = (int) => {
-        console.log(email)
-        console.log(password)
-        console.log(username)
-        console.log(int)
         axios.post('http://localhost:8000/api/register/', {
             email: email,
             password: password,
@@ -27,7 +23,7 @@ export default function Signup() {
         })
         .then(res => {
             console.log(res)
-            axios.post("http://localhost:8000/api/append-to-db/", {
+            axios.post("http://localhost:8000/api/suggestion/instant-update/", {
                 email: email
             })
             navigate('/login')

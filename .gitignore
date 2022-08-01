@@ -21,7 +21,11 @@
 /frontend/npm-debug.log*
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
-backend/questgen/modules/mcq_gen_package/._s2v_old
-backend/questgen/modules/mcq_gen_package/s2v_reddit_2015_md.tar.gz
-backend/questgen/modules/mcq_gen_package/s2v_old/._vectors
-backend/questgen/modules/mcq_gen_package/s2v_old/vectors
+/backend/questgen/modules/mcq_gen_package/._s2v_old
+/backend/questgen/modules/mcq_gen_package/s2v_reddit_2015_md.tar.gz
+/backend/questgen/modules/mcq_gen_package/s2v_old/._vectors
+/backend/questgen/modules/mcq_gen_package/s2v_old/vectors
+/backend/app/ml_models/sense2vec_distractor_generation/s2v_reddit_2015_md.tar.gz
+/backend/leaf_questgen/app/ml_models/sense2vec_distractor_generation/s2v_reddit_2015_md.tar.gz
+/backend/mcq_gen/app/ml_models/sense2vec_distractor_generation/s2v_reddit_2015_md.tar.gz
+/backend/mcq_gen/leaf_questgen/app/ml_models/sense2vec_distractor_generation/s2v_reddit_2015_md.tar.gz

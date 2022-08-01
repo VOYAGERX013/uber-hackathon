@@ -1,10 +1,10 @@
-from .modules import script_extract, data_clean, summarize, engine, mcq_gen, text_quest_gen
+from .modules import script_extract, data_clean, summarize, engine, text_quest_gen
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import spacy
 from transformers import *
-import random
 from goose3 import Goose
+import runner
 
 g = Goose()
 
@@ -36,7 +36,7 @@ class Link(APIView):
         answers = []
 
         for sent in range(0, len(sents)):
-            if len(text_quest_gen.remove_empty(questions)) >= 3:
+            if len(text_quest_gen.remove_empty(questions)) >= 2:
                 break
             else:
                 if sent_types[sent] == "wav":
@@ -63,11 +63,12 @@ class Link(APIView):
         for idx in range(0, len(questions)):
             questions[idx] = text_quest_gen.paraphrase_sentence(True, model, tokenizer, questions[idx], num_beams=10, num_return_sequences=10)
 
-        multiple_questions = mcq_gen.generate_mcqs(summarized_data)
+        multiple_questions = runner.questionize(summarized_data, 3)
 
         response = Response()
 
         response.data = {
+            "success" : True,
             "short_questions": questions,
             "short_answers" : answers,
             "mcq_data" : multiple_questions
@@ -125,10 +126,13 @@ class Text(APIView):
             for idx in range(0, len(questions)):
                 questions[idx] = text_quest_gen.paraphrase_sentence(True, model, tokenizer, questions[idx], num_beams=10, num_return_sequences=10)
 
+            multiple_questions = runner.questionize(summarized_data, 3)
+
             response.data = {
                 "success" : True,
                 "questions": questions,
-                "answers" : answers
+                "answers" : answers,
+                "mcq_data" : multiple_questions
             }
 
         except:

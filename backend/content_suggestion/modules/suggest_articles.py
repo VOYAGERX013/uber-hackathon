@@ -44,10 +44,12 @@ def google_search(query):
                     'https://policies.google.',
                     'https://support.google.',
                     'https://maps.google.',
-                    "https://en.wikipedia.")
+                    "https://en.wikipedia.",
+                    "https://youtube.com.",
+                    "https://www.youtube.com.")
 
     for url in links[:]:
-        if url.startswith(google_domains):
+        if url.startswith(google_domains) or "youtube" in url:
             links.remove(url)
     return links[0:10]
 
@@ -184,27 +186,27 @@ def get_relevant_articles(topic, subtopics, count, limit):
     if count < 5:
         all_articles = google_search(topic)
 
-        try:
-            counter = 0
-            while counter < limit:
-                random_article = all_articles[random.randint(0, len(all_articles)) - 1]
-                if random_article not in article_links:
-                    article_links.append(random_article)
-                    article_titles.append(get_title(random_article))
-                    counter += 1
-                
-            return {
-                "success" : True,
-                "links" : article_links,
-                "titles" : article_titles
-            }
+        # try:
+        counter = 0
+        while counter < limit:
+            random_article = all_articles[random.randint(0, len(all_articles)) - 1]
+            if random_article not in article_links and get_title(random_article).replace(",", " ") not in article_titles:
+                article_links.append(random_article.replace(",", " "))
+                article_titles.append(get_title(random_article).replace(",", " "))
+                counter += 1
+            
+        return {
+            "success" : True,
+            "links" : article_links,
+            "titles" : article_titles
+        }
 
-        except:
-            return {
-                "success" : False,
-                "links" : False,
-                "titles" : False
-            }
+        # except:
+            # return {
+            #     "success" : False,
+            #     "links" : False,
+            #     "titles" : False
+            # }
     else:
         # try:
         counter = 0
@@ -216,9 +218,9 @@ def get_relevant_articles(topic, subtopics, count, limit):
                 random_subtopic = subtopics[random.randint(0, len(subtopics)) - 1]
                 all_subtopic_articles = google_search(random_subtopic)
                 random_article = all_subtopic_articles[random.randint(0, len(all_subtopic_articles)) - 1]
-                if random_article not in article_links:
-                    article_links.append(random_article)
-                    article_titles.append(get_title(random_article))
+                if random_article not in article_links and get_title(random_article).replace(",", " ") not in article_titles:
+                    article_links.append(random_article.replace(",", " "))
+                    article_titles.append(get_title(random_article).replace(",", " "))
                     counter += 1
             
             else:
@@ -244,11 +246,9 @@ def get_relevant_articles(topic, subtopics, count, limit):
                 all_deep_articles = google_search(random_deep_topic)
                 random_article = all_deep_articles[random.randint(0, len(all_deep_articles)) - 1]
 
-                if random_article not in article_links:
-                    print(f"Deep topic {random_article} {random_subtopic} {random_deep_topic}")
-                    print(f"Clean valid subs {clean_valid_subs}")
-                    article_links.append(random_article)
-                    article_titles.append(get_title(random_article))
+                if random_article not in article_links and get_title(random_article).replace(",", " ") not in article_titles:
+                    article_links.append(random_article.replace(",", " "))
+                    article_titles.append(get_title(random_article).replace(",", " "))
                     counter += 1
                         
         return {
@@ -266,19 +266,27 @@ def get_relevant_articles(topic, subtopics, count, limit):
 
 def suggest(email, limit):
     user = User.objects.get(email=email)
+    print("Sub Response 1")
 
     valid_subtopics = get_subtopics(user)
+    print("Sub Response 2")
     date_joined = User.objects.filter(email=user)[0].date_joined
+    print("Sub Response 3")
     diff_days = datetime.now().replace(tzinfo=None) - date_joined.replace(tzinfo=None)
+    print("Sub Response 4")
     print(diff_days)
 
     interest_filter = Interest.objects.filter(email=user)
     relevant_subjects = []
+    print("Sub Response 5")
 
     for interest in interest_filter:
         relevant_subjects.append(interest.interest)
 
+    print("Sub Response 6")
+
     relevant_articles = get_relevant_articles(relevant_subjects[0], valid_subtopics, int(diff_days.days), limit)
+    print("Sub Response 7")
     return relevant_articles
 
 def suggest_definition(email):

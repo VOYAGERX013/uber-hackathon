@@ -1,0 +1,62 @@
+{
+    "name": "InBrief",
+    "version": "0.1.0",
+    "description": "Summarize the articles that you're currently reading!",
+    "content_security_policy": {
+        "extension_page": "script-src-elem 'self' https://cdnjs.cloudflare.com/*; object-src 'self'"
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "/loading-bar-master/loading-bar-master/dist/loading-bar.js",
+                "contentScript.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/bookmark.png",
+                "assets/play.png",
+                "assets/delete.png",
+                "assets/save.png",
+                "assets/logo.png"
+            ],
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ]
+        }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "assets/ext-icon.png",
+            "24": "assets/ext-icon.png",
+            "32": "assets/ext-icon.png"
+        },
+        "default_title": "My InBrief Summarizer",
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 3,
+    "icons": { 
+        "16": "assets/ext-icon.png",
+        "48": "assets/ext-icon.png",
+        "128": "assets/ext-icon.png"
+    }
+}

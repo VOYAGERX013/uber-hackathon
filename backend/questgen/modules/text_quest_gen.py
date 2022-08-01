@@ -35,7 +35,6 @@ def paraphrase_sentence(check_best_result, model, tokenizer, sentence, num_retur
     num_return_sequences=num_return_sequences,
   )
   sentences = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-  print(f"Sentences: {sentences}")
   
   lowest_length_sent = None
 

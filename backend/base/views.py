@@ -18,29 +18,24 @@ class Register(APIView): # Class for registering a user when the register route 
         response = Response()
 
         # If the user is saved successfully, send a success message, else sent a failure message
-        # try:
-        print("Got through")
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        try:
+            serializer = UserSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
 
-        print("Got through")
-        print(request.data["email"])
-        print(request.data["username"])
-        print(request.data["password"])
-        find_user = User.objects.get(email=request.data["email"])
-        print(find_user)
-        new_interest = Interest(email=find_user, interest=request.data["interest"])
-        print(request.data["interest"])
-        new_interest.save()
+            find_user = User.objects.get(email=request.data["email"])
 
-        response.data = {
-            "success" : True
-        }
-        # except:
-        # response.data = {
-        #     "success" : False
-        # }
+            new_interest = Interest(email=find_user, interest=request.data["interest"])
+            new_interest.save()
+
+            response.data = {
+                "success" : True
+            }
+            
+        except:
+            response.data = {
+                "success" : False
+            }
 
         return response
 
@@ -106,7 +101,7 @@ class GetUser(APIView): # Class for getting user credentials
             }
 
             return response
-        print(token)
+
         try:
             # Decode the id from the jwt token
             payload = jwt.decode(token, os.environ["SECRET_KEY"], algorithms=["HS256"])
