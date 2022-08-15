@@ -8,35 +8,34 @@
   margin-top: 80px;
   margin-bottom: 200px;
 }
-.loginnone{
-    display: none;
-    width: 0px;
-    height: 0px;
+.loginnone {
+  display: none;
+  width: 0px;
+  height: 0px;
 }
-#welcometitle{margin-top: 60px;
-
-}
-
-.inactive{
-    opacity: 0.5;
+#welcometitle {
+  margin-top: 60px;
 }
 
-#deftitle{
+.inactive {
+  opacity: 0.5;
+}
+
+#deftitle {
   padding-bottom: 15px;
-  font-size: 30px
+  font-size: 30px;
 }
-#defword{
+#defword {
   padding-top: 0px;
   padding-bottom: 0px;
   color: #1a3a5c;
-  font-size: 21px
+  font-size: 21px;
 }
-#defdef{
+#defdef {
   padding-top: 10px;
   padding-bottom: 30px;
   color: #6c849d;
   font-size: 16px;
-
 }
 .name {
   color: #f69f8b;
@@ -54,8 +53,7 @@
   width: 100%;
   text-align: center;
 }
-.desclogged{
-  
+.desclogged {
   color: #77c1c6;
   font-size: 25px;
   margin-top: -20px;
@@ -135,7 +133,7 @@
   width: 100%;
 }
 .inputlink::placeholder {
-  color: #f6b737;
+  color: #f8a600;
   font-size: 20px;
 }
 .inputoutwrap {

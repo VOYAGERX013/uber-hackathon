@@ -79,14 +79,15 @@ export default function Homepage() {
     'Highlights (Extractive Summarization)',
   )
 
-  const [abstractive, setAbstractive] = useState("")
-  const [extractive, setExtractive] = useState("")
+  const [abstractive, setAbstractive] = useState('')
+  const [extractive, setExtractive] = useState('')
   const [questData, setQuestData] = useState()
   const [fetchedQuestions, setFetchedQuestions] = useState(0)
 
   const handleLink = () => {
     setFetchedQuestions(1)
-    axios.post(
+    axios
+      .post(
         'http://localhost:8000/api/summarize/link/',
         {
           link: link,
@@ -99,19 +100,24 @@ export default function Homepage() {
         setsummary(`${res.data.summary.substr(0, 2000)}...`)
         setExtractive(`${res.data.summary.substr(0, 2000)}...`)
         window.scroll({
-            top: 1000,
-            left: 0, 
-            behavior: 'smooth',
-        });
-        axios.post("http://localhost:8000/api/questgen/link/", {
-            link: link
-        }, {
-            withCredentials: true
+          top: 1000,
+          left: 0,
+          behavior: 'smooth',
         })
-        .then((res) => {
+        axios
+          .post(
+            'http://localhost:8000/api/questgen/link/',
+            {
+              link: link,
+            },
+            {
+              withCredentials: true,
+            },
+          )
+          .then((res) => {
             setQuestData(res.data)
-            setFetchedQuestions(2);
-        })
+            setFetchedQuestions(2)
+          })
 
         // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
         //     link: link
@@ -233,8 +239,11 @@ export default function Homepage() {
               className={high ? 'selected' : 'not_selected'}
               onClick={() => {
                 sethigh(true)
-                {link != "" && setsummary(extractive)}
-                // setsummary('Highlights (Extractive Summarization)')
+                setsummary('Highlights (Extractive Summarization)')
+
+                {
+                  link != '' && setsummary(extractive)
+                }
               }}
             >
               Highlights
@@ -243,17 +252,25 @@ export default function Homepage() {
               className={high ? 'not_selected' : 'selected'}
               onClick={() => {
                 sethigh(false)
+                setsummary('Summary (Abstractive Summarization)')
                 {
                   link != '' && setsummary(abstractive)
                 }
-                // setsummary('Summary (Abstractive Summarization)')
               }}
             >
               Summary
             </div>
           </div>
           <div className="right">
-            {fetchedQuestions === 0 ? <div className="practicebtn">Go To Practice Questions</div> : fetchedQuestions === 1 ? <div className="practicebtn inactive">Please Wait...</div> : <Link className="link" to="/mc" state={{ quest_data: questData }}><div className="practicebtn">Go To Practice Questions</div></Link>}
+            {fetchedQuestions === 0 ? (
+              <div className="practicebtn">Go To Practice Questions</div>
+            ) : fetchedQuestions === 1 ? (
+              <div className="practicebtn inactive">Please Wait...</div>
+            ) : (
+              <Link className="link" to="/mc" state={{ quest_data: questData }}>
+                <div className="practicebtn">Go To Practice Questions</div>
+              </Link>
+            )}
           </div>
         </div>
         <div className="summarytext">
@@ -261,6 +278,7 @@ export default function Homepage() {
             <FiCopy
               className="iconcopy"
               onClick={() => {
+                console.log('copied')
                 navigator.clipboard.writeText(summary)
               }}
             ></FiCopy>
