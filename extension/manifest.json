@@ -26,6 +26,9 @@
                 "/loading-bar-master/loading-bar-master/dist/loading-bar.js",
                 "contentScript.js"
             ],
+            "permissions": [
+                "tabs"
+            ],
             "run_at": "document_end"
         }
     ],

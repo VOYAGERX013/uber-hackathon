@@ -39,11 +39,7 @@ export default function Navbar() {
             FAQ
           </Link>
         </li>
-        <li className="nav-item">
-          <Link to="/extension" className="nav-links">
-            Extension
-          </Link>
-        </li>
+        
         {status ? (
           <li className="nav-item">
             <Link to="/suggest" className="nav-links">

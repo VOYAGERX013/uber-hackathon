@@ -81,10 +81,12 @@ export default function Homepage() {
 
   const [abstractive, setAbstractive] = useState("")
   const [extractive, setExtractive] = useState("")
+  const [questData, setQuestData] = useState()
+  const [fetchedQuestions, setFetchedQuestions] = useState(0)
 
   const handleLink = () => {
-    axios
-      .post(
+    setFetchedQuestions(1)
+    axios.post(
         'http://localhost:8000/api/summarize/link/',
         {
           link: link,
@@ -101,6 +103,15 @@ export default function Homepage() {
             left: 0, 
             behavior: 'smooth',
         });
+        axios.post("http://localhost:8000/api/questgen/link/", {
+            link: link
+        }, {
+            withCredentials: true
+        })
+        .then((res) => {
+            setQuestData(res.data)
+            setFetchedQuestions(2);
+        })
 
         // axios.post("http://localhost:8000/api/summarize/abstractive-link/", {
         //     link: link
@@ -138,7 +149,7 @@ export default function Homepage() {
         <div className="userheader">
           {status ? (
             <div>
-              <div onClick={logout}>LOGOUT</div>
+              {/* <div onClick={logout}>LOGOUT</div> */}
               <div className="name" id="welcometitle">
                 Hello, {username}
               </div>
@@ -242,9 +253,7 @@ export default function Homepage() {
             </div>
           </div>
           <div className="right">
-            <Link className="link" to="/mc">
-              <div className="practicebtn">Go To Practice Questions</div>
-            </Link>
+            {fetchedQuestions === 0 ? <div className="practicebtn">Go To Practice Questions</div> : fetchedQuestions === 1 ? <div className="practicebtn inactive">Please Wait...</div> : <Link className="link" to="/mc" state={{ quest_data: questData }}><div className="practicebtn">Go To Practice Questions</div></Link>}
           </div>
         </div>
         <div className="summarytext">

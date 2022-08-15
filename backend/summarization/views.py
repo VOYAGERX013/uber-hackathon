@@ -8,7 +8,6 @@ nlp = spacy.load("en_core_web_sm")
 tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-xsum")
 model = PegasusForConditionalGeneration.from_pretrained("google/pegasus-xsum")
 
-
 class Link(APIView):
     def post(self, request):
         response = Response()
@@ -39,6 +38,35 @@ class Link(APIView):
             # }
 
         return response
+
+class Extension_Link(APIView):
+    def post(self, request):
+        response = Response()
+
+        try:
+            link = request.data["link"]
+
+            content = script_extract.get_content(link)
+            clean_data = data_clean.clean(content)
+            
+            summarized_data = summarize.summarize_num(clean_data, 5)
+            summarized_data = data_clean.fix_punctuation(summarized_data)
+            doc = nlp(summarized_data)
+            sentences = []
+            for sent in doc.sents:
+                sentences.append(sent.text)
+
+            response.data = {
+                "success" : True,
+                "summary": sentences
+            }
+        except:
+            response.data = {
+                "success" : False
+            }
+        
+        return response
+            
 
 class Text(APIView):
     def post(self, request):
@@ -71,6 +99,7 @@ class Abstractive_Link(APIView):
         key_points = []
 
         doc = nlp(summarized_data)
+        print(doc.text)
         for sent in doc.sents:
             key_points.append(text_quest_gen.paraphrase_sentence(False, model, tokenizer, sent.text, num_beams=5, num_return_sequences=5))
 

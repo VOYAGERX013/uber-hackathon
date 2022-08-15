@@ -65,13 +65,11 @@ function About() {
             <div className="introPic1">
               <img className="profile" src="/images/img2.png" alt="" />
               <div className="intro">
-                Here is your self introduction. Write some sentences here.
-                Basically just a paragraph introducing yourself. idk im just
-                filling up spaces soooooo just make it good. This should be
-                about 4 lines so I’m gonna make it four lines so the layout is
-                good. Also be sure to send me a your picture so I can place it
-                on the left side.
-              </div>
+              Hi, I’m Ruby. I consider myself a curious learner, an avid debater, and a considerate friend. 
+              Since I was small, I’ve always been fascinated by technology and have shown great interest in coding. 
+              I’ve been exploring the field of computer science in many different ways, including doing research in 
+              natural language processing and combining my other passions with computer science. I’ve organized Voluntutor 
+              Cloud, a volunteering organization facilitated by an online platform I built. </div>
             </div>
             <div className="introPic1">
               <img className="profile" src="/images/img3.png" alt="" />
